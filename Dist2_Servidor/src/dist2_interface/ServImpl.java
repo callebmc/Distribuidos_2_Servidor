@@ -17,7 +17,7 @@ public class ServImpl extends UnicastRemoteObject implements InterfaceServ{
     public ServImpl() throws RemoteException{}
     
     @Override
-    public void chamar(String mensagem, InterfaceCli interfaceCli) throws RemoteException {
-        interfaceCli.echo(mensagem);
+    public void chamar(String mensagem, InterfaceCli referenciaCli) throws RemoteException {
+        referenciaCli.echo(mensagem);
     }
 }
