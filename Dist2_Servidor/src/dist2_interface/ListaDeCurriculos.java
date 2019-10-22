@@ -27,7 +27,7 @@ public class ListaDeCurriculos implements Serializable{
     
     
     //Consulta a partir dos filtros
-    public List<Curriculo> consultar (String area, double salario){
+    public List<Curriculo> consultar (String area){
      //TOOD: Filtros
         return this.listaCurriculos;
     }
