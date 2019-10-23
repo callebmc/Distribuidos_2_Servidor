@@ -20,6 +20,7 @@ public class ServImpl extends UnicastRemoteObject implements InterfaceServ{
     private ArrayList<Empresa> vagasCadastradas;   
     
     public ServImpl() throws RemoteException{
+        this.vagasCadastradas = new ArrayList<>();
     }
     
     @Override
