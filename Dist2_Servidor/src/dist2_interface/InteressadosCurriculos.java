@@ -17,24 +17,20 @@ import java.util.ArrayList;
 //Classe interessados em curriculos (EMPRESAS)
 public class InteressadosCurriculos implements Serializable {
     
-    public InterfaceCli interfaceCliente;
+    private InterfaceCli interfaceCliente;
+    private String areaInteresse;
     
-     private ArrayList<Empresa> listaInteressados;
     
-    
-    public InteressadosCurriculos(InterfaceCli interfaceCliente){
+    public InteressadosCurriculos(InterfaceCli interfaceCliente, String areaInteresse){
         this.interfaceCliente = interfaceCliente;
-        this.listaInteressados = new ArrayList();
+        this.areaInteresse = areaInteresse;
     }
     
     public void adicionaInteressado(Empresa emp){
-        this.listaInteressados.add(emp);
     }
     
     public void notifica(String msg) throws RemoteException{
-        
         this.interfaceCliente.notificarCurriculos(msg, "123");
-    
     }
     
     

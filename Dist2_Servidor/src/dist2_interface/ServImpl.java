@@ -23,38 +23,46 @@ public class ServImpl extends UnicastRemoteObject implements InterfaceServ{
     
     private ArrayList<Empresa> vagasCadastradas;   
     private ListaDeCurriculos listaDeCurriculos;
-    private InteressadosVagas interessadosVagas;
-    private InteressadosCurriculos interessadosCurriculos;
+    private ArrayList<InteressadosVagas> interessadosVagas;
+    private ArrayList<InteressadosCurriculos> interessadosCurriculos;
     
     
     public ServImpl() throws RemoteException{
         this.vagasCadastradas = new ArrayList<>();
         this.listaDeCurriculos = new ListaDeCurriculos();
-       
+        this.interessadosCurriculos = new ArrayList<>();       
+        this.interessadosVagas = new ArrayList<>();
     }
-    
-    public void testaNotificacao() throws RemoteException{
-        interessadosVagas.interfaceCliente.notificarVagas("vaga disponível em", "123");
-    }
-
-    
+        
     /*
     Cria novo currículo 
     */
      @Override
     public boolean inserirCurriculo(String a, String b, String e, int c, float d, InterfaceCli cli)throws RemoteException{
         System.out.println("Estou aqui!");
-         this.interessadosVagas = new InteressadosVagas(cli);
        
         Curriculo rescu = new Curriculo (a, b, e, c, d);
-         interessadosVagas.adicionaInteressado(rescu);
-         interessadosVagas.notifica("Notificando pq sim");
-         if (interessadosCurriculos != null){
+         /*if (interessadosCurriculos != null){
              String msg = "Novo curriculo na empresa: " + a + "Na área: " + e + "Com salário de : " + d;
              interessadosCurriculos.notifica(msg);
-         }
+         }*/
          
         return listaDeCurriculos.adicionar(rescu);
+    }
+    
+    //Registra interesse em Vagas
+    @Override
+    public void registraInteresseVagas(InterfaceCli cli, String areaInteresse) throws RemoteException {
+        InteressadosVagas novoInteresse = new InteressadosVagas(cli, areaInteresse);
+        this.interessadosVagas.add(novoInteresse);
+    }
+    
+    //Registra interesse em Curriculos
+    @Override
+    public void registraInteresseCurriculos(InterfaceCli cli, String areaInteresse) throws RemoteException
+    {
+        InteressadosCurriculos novoInteresse = new InteressadosCurriculos(cli, areaInteresse);
+        this.interessadosCurriculos.add(novoInteresse);
     }
 
     //Empresa consulta currículo
@@ -72,8 +80,8 @@ public class ServImpl extends UnicastRemoteObject implements InterfaceServ{
             Empresa novaEmpresa = new Empresa(nomeEmpresa, emailEmpresa, areaVaga, cargaHorariaVaga, salarioVaga, cliente);
             vagasCadastradas.add(novaEmpresa);
             String msg = "Na empresa " + nomeEmpresa + ", Na área: " + areaVaga;
-            interessadosVagas.notifica(msg);
-            interessadosCurriculos = new InteressadosCurriculos(cliente);
+            //interessadosVagas.notifica(msg);
+            //interessadosCurriculos = new InteressadosCurriculos(cliente);
             System.out.println("Nova vaga cadastrada com sucesso");
             //cliente.notificarVaga(novaEmpresa);
         } catch (Exception e) {
@@ -125,5 +133,4 @@ public class ServImpl extends UnicastRemoteObject implements InterfaceServ{
         listaDeCurriculos.atualizar(indice, nome, contato, area, CH, salario);
         System.out.println("Curriculo ATUALIZADO");
     }
-
 }

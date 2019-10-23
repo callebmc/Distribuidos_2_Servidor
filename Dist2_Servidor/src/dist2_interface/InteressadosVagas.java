@@ -16,17 +16,16 @@ import java.util.ArrayList;
 
 //INTERESSADOS EM VAGAS (ALUNOS)
 public class InteressadosVagas implements Serializable{
-    private ArrayList<Curriculo> listaInteressados;
     
-    public InterfaceCli interfaceCliente;
+    private InterfaceCli interfaceCliente;
+    private String areaInteresse;
     
-    public InteressadosVagas(InterfaceCli interfaceCliente){
+    public InteressadosVagas(InterfaceCli interfaceCliente, String areaInteresse){
         this.interfaceCliente = interfaceCliente;
-        this.listaInteressados = new ArrayList();
+        this.areaInteresse = areaInteresse;
     }
     
     public void adicionaInteressado(Curriculo curr){
-        this.listaInteressados.add(curr);
     }
     
     public void notifica(String msg) throws RemoteException{
