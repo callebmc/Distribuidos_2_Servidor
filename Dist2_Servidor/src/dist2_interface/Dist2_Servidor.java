@@ -10,13 +10,16 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import dist2_interface.Curriculo;
+import java.util.ArrayList;
+import dist2_interface.ListaDeCurriculos;
 
 /**
  *
  * @author a1609556
  */
 public class Dist2_Servidor {
-
+       public static ListaDeCurriculos listaDeCurriculos;
     /**
      * @param args the command line arguments
      */

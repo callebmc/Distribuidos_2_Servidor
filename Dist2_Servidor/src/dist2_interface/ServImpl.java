@@ -8,19 +8,16 @@ package dist2_interface;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import dist2_interface.Curriculo;
+import java.util.List;
 
 /**
  *
  * @author a1609556
  */
 public class ServImpl extends UnicastRemoteObject implements InterfaceServ{
-
-    private ArrayList<Aluno> alunosCadastrados;
-    private ArrayList<Empresa> vagasCadastradas;    
     
     public ServImpl() throws RemoteException{
-        this.alunosCadastrados = new ArrayList<>();
-        this.vagasCadastradas = new ArrayList<>();
     }
     
     @Override
@@ -28,14 +25,15 @@ public class ServImpl extends UnicastRemoteObject implements InterfaceServ{
         referenciaCli.echo(mensagem);
     }
     
-    @Override
-    synchronized public boolean inserirAluno(Aluno a){
-        if(this.alunosCadastrados.contains(a)){
-            System.out.println("Aluno já cadastrado no sistema");
-            return false;
-        }
-        this.alunosCadastrados.add(a);
-        System.out.println("Aluno cadastrado no sistema");
-        return true;
+    
+    synchronized public boolean inserirCurriculo(Curriculo curriculo){
+        return Dist2_Servidor.listaDeCurriculos.adicionar(curriculo);
     }
+    
+    //Empresa consulta currículo
+    synchronized public List<Curriculo> consultar(String area) throws RemoteException {
+	return Dist2_Servidor.listaDeCurriculos.consultar(area);
+    }
+
+        
 }

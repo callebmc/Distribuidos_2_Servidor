@@ -7,6 +7,7 @@ package dist2_interface;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.List;
 
 /**
  *
@@ -14,5 +15,6 @@ import java.rmi.RemoteException;
  */
 public interface InterfaceServ extends Remote{
     void chamar(String mensagem, InterfaceCli interfaceCli) throws RemoteException;    
-    public boolean inserirAluno(Aluno a) throws RemoteException;
+    public boolean inserirCurriculo(Curriculo curriculo)throws RemoteException ;
+    public List<Curriculo> consultar(String area) throws RemoteException ;
 }
