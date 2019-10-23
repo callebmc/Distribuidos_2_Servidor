@@ -9,32 +9,22 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import dist2_interface.Curriculo;
-<<<<<<< Updated upstream
 import java.io.ByteArrayInputStream;
 import java.io.ObjectInputStream;
-=======
 import dist2_interface.ListaDeCurriculos;
->>>>>>> Stashed changes
 import java.util.List;
 
 /**
  *
  * @author a1609556
  */
-<<<<<<< Updated upstream
-public class ServImpl extends UnicastRemoteObject implements InterfaceServ {
 
-    private ArrayList<Empresa> vagasCadastradas;
-
-    public ServImpl() throws RemoteException {
-=======
 public class ServImpl extends UnicastRemoteObject implements InterfaceServ{
     
     private ArrayList<Empresa> vagasCadastradas;   
     private ListaDeCurriculos listaDeCurriculos;
     
     public ServImpl() throws RemoteException{
->>>>>>> Stashed changes
         this.vagasCadastradas = new ArrayList<>();
         this.listaDeCurriculos = new ListaDeCurriculos();
     }
@@ -43,11 +33,7 @@ public class ServImpl extends UnicastRemoteObject implements InterfaceServ{
     public void chamar(String mensagem, InterfaceCli referenciaCli) throws RemoteException {
         referenciaCli.echo(mensagem);
     }
-<<<<<<< Updated upstream
 
-    synchronized public boolean inserirCurriculo(Curriculo curriculo) {
-        return Dist2_Servidor.listaDeCurriculos.adicionar(curriculo);
-=======
     
      @Override
     public boolean inserirCurriculo(String a, String b, String e, int c, float d)throws RemoteException{
@@ -55,16 +41,13 @@ public class ServImpl extends UnicastRemoteObject implements InterfaceServ{
         Curriculo rescu = new Curriculo (a, b, e, c, d);
         
         return listaDeCurriculos.adicionar(rescu);
->>>>>>> Stashed changes
     }
 
     //Empresa consulta currículo
     synchronized public List<Curriculo> consultar(String area) throws RemoteException {
-<<<<<<< Updated upstream
-        return Dist2_Servidor.listaDeCurriculos.consultar(area);
-=======
+
 	return listaDeCurriculos.consultar(area);
->>>>>>> Stashed changes
+
     }
 
     @Override
