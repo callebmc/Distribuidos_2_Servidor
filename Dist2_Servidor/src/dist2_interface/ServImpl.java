@@ -38,4 +38,16 @@ public class ServImpl extends UnicastRemoteObject implements InterfaceServ{
         System.out.println("Aluno cadastrado no sistema");
         return true;
     }
+
+    @Override
+    public void criarVaga(String nomeEmpresa, String emailEmpresa, String areaVaga, String cargaHorariaVaga, float salarioVaga, InterfaceCli cliente) {
+        try{
+            Empresa novaEmpresa = new Empresa(nomeEmpresa, emailEmpresa, areaVaga, cargaHorariaVaga, salarioVaga, cliente);
+            vagasCadastradas.add(novaEmpresa);
+            System.out.println("Nova vaga cadastrada com sucesso");
+        }
+        catch(Exception e){
+            throw new UnsupportedOperationException("Not supported yet.");
+        } //To change body of generated methods, choose Tools | Templates.
+    }
 }
