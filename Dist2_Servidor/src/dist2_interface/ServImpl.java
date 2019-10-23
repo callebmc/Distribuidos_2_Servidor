@@ -44,8 +44,9 @@ public class ServImpl extends UnicastRemoteObject implements InterfaceServ{
     }
 
     //Empresa consulta currículo
-    synchronized public List<Curriculo> consultar(String area) throws RemoteException {
-
+    synchronized public ArrayList<Curriculo> consultarCurriculos(String area) throws RemoteException {
+         System.out.println("Consultar CURRICULOS");
+         //Systme.out.
 	return listaDeCurriculos.consultar(area);
 
     }

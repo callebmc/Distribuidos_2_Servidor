@@ -17,7 +17,7 @@ import dist2_interface.Curriculo;
  */
 public interface InterfaceServ extends Remote{
     void chamar(String mensagem, InterfaceCli interfaceCli) throws RemoteException;
-    public List<Curriculo> consultar(String area) throws RemoteException ;
+    public ArrayList<Curriculo> consultarCurriculos(String area) throws RemoteException ;
     public boolean inserirCurriculo(String a, String b, String e, int c, float d)throws RemoteException;
     public void criarVaga(String nomeEmpresa, String emailEmpresa, String areaVaga, String cargaHorariaVaga, float salarioVaga, InterfaceCli cliente) throws RemoteException;
     public ArrayList<Empresa> consultar(int filtro, String area, float salario) throws RemoteException ;

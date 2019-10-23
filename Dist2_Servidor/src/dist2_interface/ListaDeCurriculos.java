@@ -14,10 +14,10 @@ import dist2_interface.Curriculo;
  * @author ana
  */
 public class ListaDeCurriculos implements Serializable{
-    private List<Curriculo> listaCurriculos;
+    private ArrayList<Curriculo> listaCurriculos;
     
     public ListaDeCurriculos(){
-        listaCurriculos = new ArrayList();
+        this.listaCurriculos = new ArrayList();
     }
     
     
@@ -37,15 +37,19 @@ public class ListaDeCurriculos implements Serializable{
     
     
     //Consulta a partir dos filtros
-    public List<Curriculo> consultar (String area){
-        List<Curriculo> curriculosFiltered;
+    public ArrayList<Curriculo> consultar (String area){
+        ArrayList<Curriculo> curriculosFiltered;
         
         curriculosFiltered = new ArrayList();
-        for (Curriculo curriculo : listaCurriculos){
-            if (curriculo.getArea() == area){
-                curriculosFiltered.add(curriculo);
-            }
+        
+        if (area.equals(" ")){
+            return listaCurriculos;
         }
+            for (Curriculo curriculo : listaCurriculos){
+                if (curriculo.getArea().equals(area)){
+                    curriculosFiltered.add(curriculo);
+                }
+            }
         
         return curriculosFiltered;
     }
