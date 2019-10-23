@@ -9,15 +9,16 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
+import dist2_interface.Curriculo;
 
 /**
  *
  * @author a1609556
  */
 public interface InterfaceServ extends Remote{
-    void chamar(String mensagem, InterfaceCli interfaceCli) throws RemoteException;    
-    public boolean inserirCurriculo(Curriculo curriculo)throws RemoteException ;
+    void chamar(String mensagem, InterfaceCli interfaceCli) throws RemoteException;
     public List<Curriculo> consultar(String area) throws RemoteException ;
+    public boolean inserirCurriculo(String a, String b, String e, int c, float d)throws RemoteException;
     public void criarVaga(String nomeEmpresa, String emailEmpresa, String areaVaga, String cargaHorariaVaga, float salarioVaga, InterfaceCli cliente) throws RemoteException;
     public ArrayList<Empresa> consultar(int filtro, String area, float salario) throws RemoteException ;
 }

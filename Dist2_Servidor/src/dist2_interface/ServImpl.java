@@ -11,18 +11,22 @@ import java.util.ArrayList;
 import dist2_interface.Curriculo;
 import java.io.ByteArrayInputStream;
 import java.io.ObjectInputStream;
+import dist2_interface.ListaDeCurriculos;
 import java.util.List;
 
 /**
  *
  * @author a1609556
  */
-public class ServImpl extends UnicastRemoteObject implements InterfaceServ {
 
-    private ArrayList<Empresa> vagasCadastradas;
-
-    public ServImpl() throws RemoteException {
+public class ServImpl extends UnicastRemoteObject implements InterfaceServ{
+    
+    private ArrayList<Empresa> vagasCadastradas;   
+    private ListaDeCurriculos listaDeCurriculos;
+    
+    public ServImpl() throws RemoteException{
         this.vagasCadastradas = new ArrayList<>();
+        this.listaDeCurriculos = new ListaDeCurriculos();
     }
 
     @Override
@@ -30,13 +34,20 @@ public class ServImpl extends UnicastRemoteObject implements InterfaceServ {
         referenciaCli.echo(mensagem);
     }
 
-    synchronized public boolean inserirCurriculo(Curriculo curriculo) {
-        return Dist2_Servidor.listaDeCurriculos.adicionar(curriculo);
+    
+     @Override
+    public boolean inserirCurriculo(String a, String b, String e, int c, float d)throws RemoteException{
+        System.out.println("Estou aqui!");
+        Curriculo rescu = new Curriculo (a, b, e, c, d);
+        
+        return listaDeCurriculos.adicionar(rescu);
     }
 
     //Empresa consulta currículo
     synchronized public List<Curriculo> consultar(String area) throws RemoteException {
-        return Dist2_Servidor.listaDeCurriculos.consultar(area);
+
+	return listaDeCurriculos.consultar(area);
+
     }
 
     @Override
