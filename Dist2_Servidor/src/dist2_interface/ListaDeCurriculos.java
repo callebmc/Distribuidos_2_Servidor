@@ -33,8 +33,7 @@ public class ListaDeCurriculos implements Serializable{
         return true;
        }
       
-    }
-    
+    }   
     
     //Consulta a partir dos filtros
     public ArrayList<Curriculo> consultar (String area){
@@ -54,7 +53,7 @@ public class ListaDeCurriculos implements Serializable{
         return curriculosFiltered;
     }
     
-    
-    
-    
+    public void atualizar(int indice, String nome, String contato, String area, int CH, float salario){
+        listaCurriculos.get(indice).setCurriculo(nome, contato, area, CH, salario);
+    }
 }

@@ -57,7 +57,4 @@ public class Curriculo implements Serializable {
         this.carga_horaria = CH;
         this.salario_pretendido = salario;
     }
-    
-    
-    
 }
