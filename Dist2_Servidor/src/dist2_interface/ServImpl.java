@@ -23,23 +23,39 @@ public class ServImpl extends UnicastRemoteObject implements InterfaceServ{
     
     private ArrayList<Empresa> vagasCadastradas;   
     private ListaDeCurriculos listaDeCurriculos;
+    private InteressadosVagas interessadosVagas;
+    private InteressadosCurriculos interessadosCurriculos;
+    
     
     public ServImpl() throws RemoteException{
         this.vagasCadastradas = new ArrayList<>();
         this.listaDeCurriculos = new ListaDeCurriculos();
+       
     }
 
     @Override
     public void chamar(String mensagem, InterfaceCli referenciaCli) throws RemoteException {
         referenciaCli.echo(mensagem);
     }
+    
+    public void testaNotificacao() throws RemoteException{
+        interessadosVagas.interfaceCliente.notificarVagas("vaga disponível em", "123");
+    }
 
     
      @Override
-    public boolean inserirCurriculo(String a, String b, String e, int c, float d)throws RemoteException{
+    public boolean inserirCurriculo(String a, String b, String e, int c, float d, InterfaceCli cli)throws RemoteException{
         System.out.println("Estou aqui!");
+         this.interessadosVagas = new InteressadosVagas(cli);
+       
         Curriculo rescu = new Curriculo (a, b, e, c, d);
-        
+         interessadosVagas.adicionaInteressado(rescu);
+         interessadosVagas.notifica("Notificando pq sim");
+         if (interessadosCurriculos != null){
+             String msg = "Novo curriculo na empresa: " + a + "Na área: " + e + "Com salário de : " + d;
+             interessadosCurriculos.notifica(msg);
+         }
+         
         return listaDeCurriculos.adicionar(rescu);
     }
 
@@ -52,12 +68,15 @@ public class ServImpl extends UnicastRemoteObject implements InterfaceServ{
     }
 
     @Override
-    synchronized public void criarVaga(String nomeEmpresa, String emailEmpresa, String areaVaga, String cargaHorariaVaga, float salarioVaga, InterfaceCli cliente) {
+    synchronized public void criarVaga(String nomeEmpresa, String emailEmpresa, String areaVaga, String cargaHorariaVaga, float salarioVaga, InterfaceCli cliente) throws RemoteException {
         try {
             Empresa novaEmpresa = new Empresa(nomeEmpresa, emailEmpresa, areaVaga, cargaHorariaVaga, salarioVaga, cliente);
             vagasCadastradas.add(novaEmpresa);
+            String msg = "Na empresa " + nomeEmpresa + ", Na área: " + areaVaga;
+            interessadosVagas.notifica(msg);
+            interessadosCurriculos = new InteressadosCurriculos(cliente);
             System.out.println("Nova vaga cadastrada com sucesso");
-            cliente.notificarVaga(novaEmpresa);
+            //cliente.notificarVaga(novaEmpresa);
         } catch (Exception e) {
             throw new UnsupportedOperationException("Not supported yet.");
         } //To change body of generated methods, choose Tools | Templates.
