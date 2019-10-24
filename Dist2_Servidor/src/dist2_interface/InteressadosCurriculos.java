@@ -13,31 +13,28 @@ import java.util.ArrayList;
  *
  * @author ana
  */
-
 //Classe interessados em curriculos (EMPRESAS)
 public class InteressadosCurriculos implements Serializable {
-    
+
     private InterfaceCli interfaceCliente;
     private String areaInteresse;
-    
-    
-    public InteressadosCurriculos(InterfaceCli interfaceCliente, String areaInteresse){
+
+    //CONSTRUTUOR DE INTERESSE EM CURRICULOS
+    public InteressadosCurriculos(InterfaceCli interfaceCliente, String areaInteresse) {
         this.interfaceCliente = interfaceCliente;
         this.areaInteresse = areaInteresse;
     }
-    
-    public void adicionaInteressado(Empresa emp){
-    }
-    
-    public void notifica(String msg) throws RemoteException{
+
+    //MÉTODO QUE INVOCA A NOTIFICAÇÃO NA INTERFACE DO CLIENTE
+    public void notifica(String msg) throws RemoteException {
         this.interfaceCliente.notificarCurriculos(msg, "123");
     }
-    
-    public String getAreaInteresse(){
+
+    public String getAreaInteresse() {
         return this.areaInteresse;
     }
-    
-    public InterfaceCli getInterfaceCli(){
+
+    public InterfaceCli getInterfaceCli() {
         return this.interfaceCliente;
     }
 }

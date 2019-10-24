@@ -13,7 +13,12 @@ import java.rmi.RemoteException;
  * @author a1609556
  */
 public interface InterfaceCli extends Remote {
-    void echo(String mensagem) throws RemoteException;   
+
+    void echo(String mensagem) throws RemoteException;
+
+    //NOTIFICA SE HOUVER INTERESSE DE CURRICULO
     public void notificarCurriculos(String msg, String titulo) throws RemoteException;
+
+    //NOTIFICA SE HOUVER INTERESSE DE VAGA
     public void notificarVagas(String msg, String titulo) throws RemoteException;
 }

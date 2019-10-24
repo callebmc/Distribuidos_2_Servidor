@@ -22,13 +22,13 @@ public class ServImpl extends UnicastRemoteObject implements InterfaceServ {
 
     //Lista de vagas cadastradas
     private ArrayList<Empresa> vagasCadastradas;
-    
+
     //Lista de curriculos
     private ListaDeCurriculos listaDeCurriculos;
-    
+
     //Lista de registro de interesse de vagas
     private ArrayList<InteressadosVagas> interessadosVagas;
-    
+
     //Lista de registro de interesse de curriculos
     private ArrayList<InteressadosCurriculos> interessadosCurriculos;
 
@@ -103,13 +103,13 @@ public class ServImpl extends UnicastRemoteObject implements InterfaceServ {
             }
         }
     }
-    
+
     //MÉTODO DE NOTIFICAÇÃO DE INTERESSE DE CURRICULO
     @Override
-    public void notificaInteresseCurriculo(String areaInteresse, InterfaceCli cli) throws RemoteException{
-        if(interessadosCurriculos != null) {
-            for(InteressadosCurriculos interesse: interessadosCurriculos){
-                if(interesse.getAreaInteresse().equals(areaInteresse)){
+    public void notificaInteresseCurriculo(String areaInteresse, InterfaceCli cli) throws RemoteException {
+        if (interessadosCurriculos != null) {
+            for (InteressadosCurriculos interesse : interessadosCurriculos) {
+                if (interesse.getAreaInteresse().equals(areaInteresse)) {
                     String msg = "Novo curriculo na área: " + areaInteresse;
                     interesse.notifica(msg);
                 }

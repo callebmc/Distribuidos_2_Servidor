@@ -19,15 +19,17 @@ import dist2_interface.ListaDeCurriculos;
  * @author a1609556
  */
 public class Dist2_Servidor {
-       public static ListaDeCurriculos listaDeCurriculos;
+
+    public static ListaDeCurriculos listaDeCurriculos;
+
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) throws RemoteException, AlreadyBoundException {
         Registry reg = LocateRegistry.createRegistry(1099);
-        
+
         ServImpl servico = new ServImpl();
         reg.bind("Hello World", servico);
     }
-    
+
 }
