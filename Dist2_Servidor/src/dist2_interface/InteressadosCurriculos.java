@@ -33,6 +33,11 @@ public class InteressadosCurriculos implements Serializable {
         this.interfaceCliente.notificarCurriculos(msg, "123");
     }
     
+    public String getAreaInteresse(){
+        return this.areaInteresse;
+    }
     
-    
+    public InterfaceCli getInterfaceCli(){
+        return this.interfaceCliente;
+    }
 }

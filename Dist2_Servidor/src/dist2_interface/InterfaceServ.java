@@ -36,6 +36,11 @@ public interface InterfaceServ extends Remote{
     */
     public void registraInteresseVagas(InterfaceCli cli, String areaInteresse) throws RemoteException;    
     
+    /*
+    Método que envia a notificação de nova vaga
+    */
+    public void notificaInteresseVaga(String areaInteresse, InterfaceCli cli) throws RemoteException;
+    
     /********************************/
     /********************************/
     /********************************/
@@ -58,5 +63,10 @@ public interface InterfaceServ extends Remote{
     /*
     Método que registra interesse em Curriculos
     */
-    public void registraInteresseCurriculos(InterfaceCli cli, String areaInteresse) throws RemoteException;    
+    public void registraInteresseCurriculos(InterfaceCli cli, String areaInteresse) throws RemoteException;  
+    
+    /*
+    Método que envia a notificação de nova vaga
+    */
+    public void notificaInteresseCurriculo(String areaInteresse, InterfaceCli cli) throws RemoteException;
 }

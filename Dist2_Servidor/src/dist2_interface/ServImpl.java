@@ -18,58 +18,62 @@ import java.util.List;
  *
  * @author a1609556
  */
+public class ServImpl extends UnicastRemoteObject implements InterfaceServ {
 
-public class ServImpl extends UnicastRemoteObject implements InterfaceServ{
+    //Lista de vagas cadastradas
+    private ArrayList<Empresa> vagasCadastradas;
     
-    private ArrayList<Empresa> vagasCadastradas;   
+    //Lista de curriculos
     private ListaDeCurriculos listaDeCurriculos;
+    
+    //Lista de registro de interesse de vagas
     private ArrayList<InteressadosVagas> interessadosVagas;
+    
+    //Lista de registro de interesse de curriculos
     private ArrayList<InteressadosCurriculos> interessadosCurriculos;
-    
-    
-    public ServImpl() throws RemoteException{
+
+    public ServImpl() throws RemoteException {
+        //Inicializa as listas
         this.vagasCadastradas = new ArrayList<>();
         this.listaDeCurriculos = new ListaDeCurriculos();
-        this.interessadosCurriculos = new ArrayList<>();       
+        this.interessadosCurriculos = new ArrayList<>();
         this.interessadosVagas = new ArrayList<>();
     }
-        
+
     /*
     Cria novo currículo 
-    */
-     @Override
-    public boolean inserirCurriculo(String a, String b, String e, int c, float d, InterfaceCli cli)throws RemoteException{
+     */
+    @Override
+    public boolean inserirCurriculo(String a, String b, String e, int c, float d, InterfaceCli cli) throws RemoteException {
         System.out.println("Estou aqui!");
-       
-        Curriculo rescu = new Curriculo (a, b, e, c, d);
-         /*if (interessadosCurriculos != null){
+
+        Curriculo rescu = new Curriculo(a, b, e, c, d);
+        /*if (interessadosCurriculos != null){
              String msg = "Novo curriculo na empresa: " + a + "Na área: " + e + "Com salário de : " + d;
              interessadosCurriculos.notifica(msg);
          }*/
-         
+        notificaInteresseCurriculo(e, cli);
         return listaDeCurriculos.adicionar(rescu);
     }
-    
+
     //Registra interesse em Vagas
     @Override
     public void registraInteresseVagas(InterfaceCli cli, String areaInteresse) throws RemoteException {
         InteressadosVagas novoInteresse = new InteressadosVagas(cli, areaInteresse);
         this.interessadosVagas.add(novoInteresse);
     }
-    
+
     //Registra interesse em Curriculos
     @Override
-    public void registraInteresseCurriculos(InterfaceCli cli, String areaInteresse) throws RemoteException
-    {
+    public void registraInteresseCurriculos(InterfaceCli cli, String areaInteresse) throws RemoteException {
         InteressadosCurriculos novoInteresse = new InteressadosCurriculos(cli, areaInteresse);
         this.interessadosCurriculos.add(novoInteresse);
     }
 
     //Empresa consulta currículo
     synchronized public ArrayList<Curriculo> consultarCurriculos(String area) throws RemoteException {
-         System.out.println("Consultar CURRICULOS");
-         //Systme.out.
-	return listaDeCurriculos.consultar(area);
+        System.out.println("Consultar CURRICULOS");
+        return listaDeCurriculos.consultar(area);
 
     }
 
@@ -79,14 +83,38 @@ public class ServImpl extends UnicastRemoteObject implements InterfaceServ{
         try {
             Empresa novaEmpresa = new Empresa(nomeEmpresa, emailEmpresa, areaVaga, cargaHorariaVaga, salarioVaga, cliente);
             vagasCadastradas.add(novaEmpresa);
-            String msg = "Na empresa " + nomeEmpresa + ", Na área: " + areaVaga;
-            //interessadosVagas.notifica(msg);
-            //interessadosCurriculos = new InteressadosCurriculos(cliente);
             System.out.println("Nova vaga cadastrada com sucesso");
-            //cliente.notificarVaga(novaEmpresa);
+            notificaInteresseVaga(areaVaga, cliente);
         } catch (Exception e) {
-            throw new UnsupportedOperationException("Not supported yet.");
+            throw new UnsupportedOperationException(e);
         } //To change body of generated methods, choose Tools | Templates.
+    }
+
+    //MÉTODO DE NOTIFICAÇÃO DE INTERESSE DE VAGA
+    @Override
+    synchronized public void notificaInteresseVaga(String areaInteresse, InterfaceCli cli) throws RemoteException {
+
+        if (interessadosVagas != null) {
+            for (InteressadosVagas interesse : interessadosVagas) {
+                if (interesse.getAreaInteresse().equals(areaInteresse)) {
+                    String msg = "Nova vaga na área: " + areaInteresse;
+                    interesse.notifica(msg);
+                }
+            }
+        }
+    }
+    
+    //MÉTODO DE NOTIFICAÇÃO DE INTERESSE DE CURRICULO
+    @Override
+    public void notificaInteresseCurriculo(String areaInteresse, InterfaceCli cli) throws RemoteException{
+        if(interessadosCurriculos != null) {
+            for(InteressadosCurriculos interesse: interessadosCurriculos){
+                if(interesse.getAreaInteresse().equals(areaInteresse)){
+                    String msg = "Novo curriculo na área: " + areaInteresse;
+                    interesse.notifica(msg);
+                }
+            }
+        }
     }
 
     //Consulta vagas de acordo com os filtro e retorna uma lista de Vagas
@@ -99,24 +127,24 @@ public class ServImpl extends UnicastRemoteObject implements InterfaceServ{
             if (filtro == 1) {
                 for (Empresa empresa : vagasCadastradas) {
 
-                    if (empresa.getSalarioVaga()>= salario) {
+                    if (empresa.getSalarioVaga() >= salario) {
                         if (empresa.getAreaVaga().equals(area)) {
                             empresasFiltered.add(empresa);
                         }
                     }
                 }
             }
-            if(filtro == 2){
+            if (filtro == 2) {
                 for (Empresa empresa : vagasCadastradas) {
                     empresasFiltered.add(empresa);
                 }
             }
-            return empresasFiltered;            
+            return empresasFiltered;
         } catch (Exception e) {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
     }
-    
+
     //Atualiza vaga de estágio
     @Override
     public void atualizarVaga(int indice, String nomeEmpresa, String emailEmpresa, String areaVaga, String cargaHorariaVaga, float salarioVaga, InterfaceCli cliente) throws RemoteException {
